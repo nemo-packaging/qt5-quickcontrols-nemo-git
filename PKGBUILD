@@ -1,25 +1,33 @@
-## $Id$
+# $Id$
 # Contributor: TheKit <nekit1000 at gmail.com>
+# Contributor: Bart Ribbers <bribbers@disroot.org>
 # Contributor: Alexey Andreyev <aa13q@ya.ru>
 # Maintainer: James Kittsmiller (AJSlye) <james@nulogicsystems.com>
 
-_name=quickcontrols-nemo
-pkgname=qt5-$_name-git
-pkgver=5.3.13.r13.g63d6da1
+_host="github.com"
+_project=nemomobile
+_basename=quickcontrols-nemo
+_branch=master
+
+_gitname=qt$_basename
+pkgname=qt5-$_basename-git
+
+pkgver=5.3.14.r0.g63d6da1
+
 pkgrel=1
 pkgdesc="Nemomobile Qt Quick Controls"
 arch=('x86_64' 'aarch64')
-url="https://github/nemomobile/qt$_name"
-license=('GPL')
-depends=('qt5-base' 'qt5-quickcontrols')
+url="https://$_host/$_project/$_gitname#branch=$_branch"
+license=('LGPL-2.1-only AND Apache-2.0')
+depends=('qt5-glacier-app-git' 'qt5-quickcontrols')
 makedepends=('git')
 provides=("${pkgname%-git}")
 conflicts=("${pkgname%-git}")
-source=("git+https://github.com/nemomobile/qt$_name.git")
+source=("${pkgname}::git+${url}")
 md5sums=('SKIP')
 
 pkgver() {
-  cd "$srcdir/qt$_name"
+  cd "${srcdir}/${pkgname}"
   ( set -o pipefail
     git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
     printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
@@ -27,7 +35,7 @@ pkgver() {
 }
 
 build() {
-  cd "$srcdir/qt$_name"
+  cd "${srcdir}/${pkgname}"
   mkdir -p build
   cd build
   qmake ..
@@ -35,7 +43,7 @@ build() {
 }
 
 package() {
-  cd "$srcdir/qt$_name"
+  cd "${srcdir}/${pkgname}"
   cd build
   make INSTALL_ROOT="${pkgdir}" install
 }
