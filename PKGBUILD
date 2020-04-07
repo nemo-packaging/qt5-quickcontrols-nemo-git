@@ -19,7 +19,7 @@ pkgdesc="Nemomobile Qt Quick Controls"
 arch=('x86_64' 'aarch64')
 url="https://$_host/$_project/$_gitname#branch=$_branch"
 license=('LGPL-2.1-only AND Apache-2.0')
-depends=('qt5-glacier-app-git' 'qt5-quickcontrols')
+depends=('qt5-quickcontrols' 'nemo-theme-default')
 makedepends=('git')
 provides=("${pkgname%-git}")
 conflicts=("${pkgname%-git}")
