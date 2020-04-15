@@ -34,6 +34,13 @@ pkgver() {
   ) 2>/dev/null
 }
 
+prepare() {
+  # TODO: upstream building examples optional
+  # https://t.me/NemoMobile/17555
+  cd "${srcdir}/${pkgname}"
+  sed -i 's/examples//' qtquickcontrols-nemo.pro
+}
+
 build() {
   cd "${srcdir}/${pkgname}"
   mkdir -p build
